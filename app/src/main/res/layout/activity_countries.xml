@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.android.helloworld.Countries">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/nigeria"
+        android:layout_marginBottom="180dp"
+        android:padding="32dp"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/nigeria_btn"
+        android:layout_marginTop="300dp"
+        android:layout_marginLeft="62dp"
+        android:text="NIGERIA"
+        android:backgroundTint="@color/colorPrimary"
+        android:textColor="@color/colorPrimaryLight" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tanzania_button"
+        android:text="TANZANIA"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="160dp"
+        android:layout_marginLeft="250dp"android:backgroundTint="@color/colorPrimary"
+        android:textColor="@color/colorPrimaryLight" />
+
+</RelativeLayout>

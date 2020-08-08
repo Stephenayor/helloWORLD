@@ -16,6 +16,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Countries" />
+        <activity android:name=".Capitals" />
+        <activity android:name=".Cities"></activity>
     </application>
 
 </manifest>

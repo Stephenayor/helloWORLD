@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">helloWORLD</string>
+
+    <string name="activity_countries">COUNTRIES</string>
+    <string name="activity_capitals">CAPITALS</string>
+    <string name="activity_cities">CITIES</string>
 </resources>
