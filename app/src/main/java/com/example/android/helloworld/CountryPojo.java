@@ -1,11 +1,13 @@
 package com.example.android.helloworld;
 
+import android.widget.ImageView;
+
 public class CountryPojo {
     String name;
-    String  image;
-    String imageContainer;
+    int image;
+    private ImageView imageContainer;
 
-    public CountryPojo(String name, String image, String imageContainer){
+    public CountryPojo(String name,  int image, ImageView imageContainer){
 
         this.name = name;
         this.image= image;
@@ -20,10 +22,18 @@ public class CountryPojo {
         return name;
     }
 
-    public void setImage(String image){
+    public void setImage(int image){
         this.image=image;
     }
-    public String getImage(){
+    public int getImage(){
         return image;
     }
+
+    public void setImageContainer(ImageView imageContainer){
+        this.imageContainer=imageContainer;
+    }
+    public ImageView getImageContainer() {
+        return imageContainer;
+    }
+
 }
