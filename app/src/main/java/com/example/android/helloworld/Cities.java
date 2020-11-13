@@ -1,7 +1,9 @@
 package com.example.android.helloworld;
 
-import android.support.v7.app.AppCompatActivity;
+
 import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class Cities extends AppCompatActivity {
 

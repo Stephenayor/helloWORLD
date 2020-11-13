@@ -1,6 +1,8 @@
 package com.example.android.helloworld;
 
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 
 public class Capitals extends AppCompatActivity {

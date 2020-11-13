@@ -1,72 +1,100 @@
 package com.example.android.helloworld;
 
-import android.support.v7.app.AppCompatActivity;
+import android.content.Context;
 import android.os.Bundle;
-import android.view.Gravity;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.bumptech.glide.Glide;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.StringWriter;
+import java.io.Writer;
+import java.util.ArrayList;
+import java.util.List;
 
-import java.time.Instant;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-public class Countries extends AppCompatActivity implements CountryJson {
-
-    private  String  mName;
-    private int image;
-    private boolean imageContainer;
-    ImageView imageView;
-
+public class Countries extends AppCompatActivity implements CountryOptionsListAdapter.ItemClickListener {
+    private RecyclerView recyclerView;
+    private ImageView imageView;
+    private List<CountryModel> countryModelList = new ArrayList<>();
+    Context mContext;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_countries);
-
-        Button nigeria_btn = (Button) findViewById(R.id.nigeria_btn);
-         imageView = (ImageView) findViewById(R.id.country_image);
-
-
-        Glide.with(this)
-            .load("nigeria.png")
-                .into(R.id.country_image);
-
-
         try {
-            //get JSON object from JSON file
-            JSONObject obj = new JSONObject(JSON_STRING);
-            //Fetch JSON object
-            JSONObject Nigeria = obj.getJSONObject("Nigeria");
-            //get Objects name and image
-            mName = Nigeria.getString("nigeria");
-            image = Nigeria.getInt("nigeria.png");
-        } catch (JSONException e) {
+            getCountryData(readFromRawFile());
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
+        //TODO : initialize the imageview
+
+        imageView = new ImageView(this);
+        imageView.setImageResource(R.drawable.nigeria);
+        recyclerView = findViewById(R.id.countries_recyclerView);
     }
 
-//        @Override
-//                public boolean equals(Object o);
-//                Countries country = (Countries)o;
-//                return imageContainer == country.imageContainer  && "nigeria.png";
+    private void getCountryData(String countryJson) {
+        Gson gson = new Gson();
+        countryModelList = gson.fromJson(countryJson, new TypeToken<ArrayList<CountryModel>>(){}.getType());
+        displayData();
+     }
 
+    private void displayData() {
+        //TODO : USE GLIDE TO LOAD THE IMAGES
+        Glide.with(this)
+                .load(imageView)
+                .into(imageView);
 
-            public void checkImage(View v) {
-                if(imageContainer.equals("nigeria.png")){
-                    // display this Toast
-                    Toast toast = Toast.makeText(getApplicationContext(), "Correct", Toast.LENGTH_SHORT);
-                    toast.setGravity(Gravity.BOTTOM | Gravity.LEFT, 0, 0);
-                    toast.show(); // show Toast
-                }else { }
-            }
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new GridLayoutManager(mContext, 2));
+        recyclerView.setAdapter(new CountryOptionsListAdapter(mContext, countryModelList, this));
+
+    }
+
+    private String readFromRawFile() throws IOException {
+         InputStream inputStream = getResources().openRawResource(R.raw.countries);
+         Writer writer = new StringWriter();
+         char[] buffer = new char[1024];
+         try {
+             Reader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+             int n;
+             while ((n = reader.read(buffer)) != -1) {
+                 writer.write(buffer, 0, n);
+             }
+         } finally {
+             inputStream.close();
+         }
+         return writer.toString();
         }
 
 
+    @Override
+    public void onItemClick(String optionChosen, int position) {
+        if (countryModelList.get(0).correctAnswer.equals(optionChosen)){
+            Toast.makeText(getApplicationContext(), "Correct", Toast.LENGTH_SHORT);
+            getAnotherCountryData();
+        }else {
+
+        }
+       }
 
 
+    private void getAnotherCountryData() {
+
+    }
+}
 
