@@ -2,13 +2,17 @@ package com.example.android.helloworld;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.reflect.TypeToken;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,8 +20,11 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringWriter;
 import java.io.Writer;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -40,6 +47,8 @@ public class Countries extends AppCompatActivity implements CountryOptionsListAd
             e.printStackTrace();
         }
 
+
+
         //TODO : initialize the imageview
 
         imageView = new ImageView(this);
@@ -51,7 +60,7 @@ public class Countries extends AppCompatActivity implements CountryOptionsListAd
         Gson gson = new Gson();
         countryModelList = gson.fromJson(countryJson, new TypeToken<ArrayList<CountryModel>>(){}.getType());
         displayData();
-     }
+    }
 
     private void displayData() {
         //TODO : USE GLIDE TO LOAD THE IMAGES
@@ -66,35 +75,40 @@ public class Countries extends AppCompatActivity implements CountryOptionsListAd
     }
 
     private String readFromRawFile() throws IOException {
-         InputStream inputStream = getResources().openRawResource(R.raw.countries);
-         Writer writer = new StringWriter();
-         char[] buffer = new char[1024];
-         try {
-             Reader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
-             int n;
-             while ((n = reader.read(buffer)) != -1) {
-                 writer.write(buffer, 0, n);
-             }
-         } finally {
-             inputStream.close();
-         }
-         return writer.toString();
+        InputStream inputStream = getResources().openRawResource(R.raw.countries);
+        Writer writer = new StringWriter();
+        char[] buffer = new char[1024];
+        try {
+            Reader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+            int n;
+            while ((n = reader.read(buffer)) != -1) {
+                writer.write(buffer, 0, n);
+            }
+        } finally {
+            inputStream.close();
         }
+        return writer.toString();
+    }
 
 
     @Override
     public void onItemClick(String optionChosen, int position) {
         if (countryModelList.get(0).correctAnswer.equals(optionChosen)){
-            Toast.makeText(getApplicationContext(), "Correct", Toast.LENGTH_SHORT);
-            getAnotherCountryData();
+            Toast.makeText(getApplicationContext(), "Correct", Toast.LENGTH_SHORT).show();
         }else {
-
+            Toast.makeText(mContext, "Wrong", Toast.LENGTH_SHORT).show();
+            getAnotherCountryData();
         }
-       }
-
-
-    private void getAnotherCountryData() {
-
     }
+
+    //Gets a random data from the Country model
+    private void getAnotherCountryData() {
+        Collections.shuffle(countryModelList, new Random());
+        displayData();
+    }
+
 }
+
+
+
 

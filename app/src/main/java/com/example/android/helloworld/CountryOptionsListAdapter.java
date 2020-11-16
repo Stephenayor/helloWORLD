@@ -66,7 +66,7 @@ public class CountryOptionsListAdapter extends RecyclerView.Adapter<CountryOptio
         }
     }
 
-    // parent activity will implement this method to respond to click events
+    // Parent Activity Will Implement this Method to Respond to Click Events
     public interface ItemClickListener {
         void onItemClick(String option, int position);
     }
