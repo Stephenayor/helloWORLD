@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -15,15 +14,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class CountryOptionsListAdapter extends RecyclerView.Adapter<CountryOptionsListAdapter.CountryOptionsViewHolder> {
 
-    private List<CountryModel> modelList;
+    private List<String> optionsList;
     private LayoutInflater layoutInflater;
-    private Context mContext;
+    private Context context;
     private ItemClickListener mClickListener;
 
-    public CountryOptionsListAdapter(Context context, List<CountryModel> modelList, ItemClickListener clickListener) {
-        this.modelList = modelList;
+    public CountryOptionsListAdapter(Context context, List<String>optionsList , ItemClickListener clickListener) {
+        this.optionsList = optionsList;
+        this.context = context;
         this.layoutInflater = LayoutInflater.from(context);
-        this.mContext = context;
         this.mClickListener = clickListener;
     }
 
@@ -38,13 +37,12 @@ public class CountryOptionsListAdapter extends RecyclerView.Adapter<CountryOptio
     @Override
     public void onBindViewHolder(@NonNull CountryOptionsViewHolder holder, int position) {
         //Get the required value
-        CountryModel countryModel = modelList.get(position);
-        holder.optionsButton.setText(countryModel.getOptionList().get(position));
+        holder.optionsButton.setText(optionsList.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return modelList.size();
+        return optionsList.size();
     }
 
 
@@ -68,6 +66,6 @@ public class CountryOptionsListAdapter extends RecyclerView.Adapter<CountryOptio
 
     // Parent Activity Will Implement this Method to Respond to Click Events
     public interface ItemClickListener {
-        void onItemClick(String option, int position);
+        void onItemClick(String optionChosen, int position);
     }
 }

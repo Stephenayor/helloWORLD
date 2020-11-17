@@ -1,5 +1,4 @@
-{
-  "Countries": [
+ [
     {
       "id": 1,
       "name": "Nigeria",
@@ -412,5 +411,5 @@
         "United states"
       ]}
   ]
-}
+
 

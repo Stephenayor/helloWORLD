@@ -7,11 +7,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.google.gson.reflect.TypeToken;
-
-import org.json.JSONArray;
-import org.json.JSONException;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -20,7 +16,6 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringWriter;
 import java.io.Writer;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -41,36 +36,31 @@ public class Countries extends AppCompatActivity implements CountryOptionsListAd
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_countries);
+        imageView = findViewById(R.id.countries_flag_image);
+        recyclerView = findViewById(R.id.options_recyclerView);
+
         try {
             getCountryData(readFromRawFile());
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
-
-        //TODO : initialize the imageview
-
-        imageView = new ImageView(this);
-        imageView.setImageResource(R.drawable.nigeria);
-        recyclerView = findViewById(R.id.countries_recyclerView);
     }
 
     private void getCountryData(String countryJson) {
         Gson gson = new Gson();
         countryModelList = gson.fromJson(countryJson, new TypeToken<ArrayList<CountryModel>>(){}.getType());
-        displayData();
+        displayData(countryModelList.get(0));
     }
 
-    private void displayData() {
+    private void displayData(CountryModel countryModel) {
         //TODO : USE GLIDE TO LOAD THE IMAGES
         Glide.with(this)
-                .load(imageView)
+                .load(R.drawable.nigeria)
                 .into(imageView);
 
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new GridLayoutManager(mContext, 2));
-        recyclerView.setAdapter(new CountryOptionsListAdapter(mContext, countryModelList, this));
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+        recyclerView.setAdapter(new CountryOptionsListAdapter(this,countryModel.getOptionList(), this));
 
     }
 
@@ -93,7 +83,7 @@ public class Countries extends AppCompatActivity implements CountryOptionsListAd
 
     @Override
     public void onItemClick(String optionChosen, int position) {
-        if (countryModelList.get(0).correctAnswer.equals(optionChosen)){
+        if (countryModelList.get(0).getCorrectAnswer().equals(optionChosen)){
             Toast.makeText(getApplicationContext(), "Correct", Toast.LENGTH_SHORT).show();
         }else {
             Toast.makeText(mContext, "Wrong", Toast.LENGTH_SHORT).show();
@@ -104,7 +94,7 @@ public class Countries extends AppCompatActivity implements CountryOptionsListAd
     //Gets a random data from the Country model
     private void getAnotherCountryData() {
         Collections.shuffle(countryModelList, new Random());
-        displayData();
+        displayData(countryModelList.get(0));
     }
 
 }
