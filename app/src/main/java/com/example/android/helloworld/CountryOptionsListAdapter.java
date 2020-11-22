@@ -4,7 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -13,14 +13,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 public class CountryOptionsListAdapter extends RecyclerView.Adapter<CountryOptionsListAdapter.CountryOptionsViewHolder> {
-
-    private List<String> optionsList;
+    private CountryModel model;
     private LayoutInflater layoutInflater;
     private Context context;
     private ItemClickListener mClickListener;
 
-    public CountryOptionsListAdapter(Context context, List<String>optionsList , ItemClickListener clickListener) {
-        this.optionsList = optionsList;
+    public CountryOptionsListAdapter(Context context,  ItemClickListener clickListener, CountryModel model) {
+        this.model = model;
         this.context = context;
         this.layoutInflater = LayoutInflater.from(context);
         this.mClickListener = clickListener;
@@ -37,35 +36,35 @@ public class CountryOptionsListAdapter extends RecyclerView.Adapter<CountryOptio
     @Override
     public void onBindViewHolder(@NonNull CountryOptionsViewHolder holder, int position) {
         //Get the required value
-        holder.optionsButton.setText(optionsList.get(position));
+        holder.optionsText.setText(model.getOptionList().get(position));
     }
 
     @Override
     public int getItemCount() {
-        return optionsList.size();
+        return model.getOptionList().size();
     }
 
 
 
     public class CountryOptionsViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        public Button optionsButton;
+        public TextView optionsText;
 
         public CountryOptionsViewHolder(@NonNull View itemView) {
             super(itemView);
-            optionsButton = itemView.findViewById(R.id.optionsButton);
+            optionsText = itemView.findViewById(R.id.optionsButton);
             itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View view) {
-            if (mClickListener != null) mClickListener.onItemClick(optionsButton.getText().toString(), getAdapterPosition());
+            if (mClickListener != null) mClickListener.onItemClick(optionsText.getText().toString(), getAdapterPosition(), model);
 
         }
     }
 
     // Parent Activity Will Implement this Method to Respond to Click Events
     public interface ItemClickListener {
-        void onItemClick(String optionChosen, int position);
+        void onItemClick(String optionChosen, int position, CountryModel model);
     }
 }

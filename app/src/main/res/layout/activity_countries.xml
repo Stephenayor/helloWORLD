@@ -12,13 +12,13 @@
         android:layout_width="match_parent"
         android:layout_height="250dp"
         android:id="@+id/countries_flag_image"
-        android:layout_marginBottom="60dp"/>
+        android:layout_marginBottom="40dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/options_recyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="40dp">
+        android:layout_marginLeft="60dp">
     </androidx.recyclerview.widget.RecyclerView>
 
 </LinearLayout>
