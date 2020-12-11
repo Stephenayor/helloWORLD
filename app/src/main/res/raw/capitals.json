@@ -1,0 +1,59 @@
+[
+  {
+    "id": 1,
+    "capital": "Abuja",
+    "country": "Nigeria",
+    "options": [
+      "Abuja",
+      "Cairo",
+      "Toronto",
+      "Malmo"
+    ]
+  },
+  {
+    "id": 2,
+    "capital": "Beijing",
+    "country": "China",
+    "options" : [
+      "Abuja",
+      "Beijing",
+      "Ottawa",
+      "Yaounde"
+    ]
+  },
+  {
+    "id": 3,
+    "capital": "Yamoussoukro",
+    "country": "Ivory Coast",
+    "options": [
+      "Ottawa",
+      "Yaounde",
+      "Sucre",
+      "Yamoussoukro"
+    ]
+  },
+  {
+    "id": 4,
+    "capital": "Algiers",
+    "country": "Algeria",
+    "options": [
+      "Kabul",
+      "Algiers",
+      "Brasilia",
+      "Tirana"
+    ]
+  },
+  {
+    "id": 5,
+    "capital": "Luanda",
+    "country": "Angola",
+    "options": [
+      "Beijing",
+      "Abuja",
+      "Ottawa",
+      "Buenos Aires"
+    ]
+  }
+]
+
+
