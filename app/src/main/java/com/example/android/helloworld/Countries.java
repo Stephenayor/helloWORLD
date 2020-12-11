@@ -74,10 +74,14 @@ public class Countries extends AppCompatActivity implements CountryOptionsListAd
     private void getCountryData(String countryJson) {
         Gson gson = new Gson();
         countryModelList = gson.fromJson(countryJson, new TypeToken<ArrayList<CountryModel>>() {}.getType());
-        displayData(countryModelList.get(0));
+        displayData(getRandomQuestion());
     }
 
 
+    private CountryModel getRandomQuestion(){
+        Collections.shuffle(countryModelList, new Random());
+        return countryModelList.get(0);
+    }
 
     private void displayData(CountryModel countryModel) {
         // USE GLIDE TO LOAD THE IMAGES
@@ -91,6 +95,7 @@ public class Countries extends AppCompatActivity implements CountryOptionsListAd
 
         int keepTheObjectID = countryModel.getId();
     }
+
 
 
     @Override
@@ -119,7 +124,7 @@ public class Countries extends AppCompatActivity implements CountryOptionsListAd
        Collections.shuffle(countryModelList, new Random());
        if (countryModelList.get(0).getId()==keepTheObjectID){
            Collections.shuffle(countryModelList,new Random());
-}else {
+        }else {
            displayData(countryModelList.get(0));
        }
 
